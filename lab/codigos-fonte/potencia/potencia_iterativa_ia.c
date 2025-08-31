@@ -1,5 +1,6 @@
 #include "stdio.h"
 
+// IA
 int potencia_iterativa(int n, int k) {
     int resultado = 1;
     int base = n % 1000;

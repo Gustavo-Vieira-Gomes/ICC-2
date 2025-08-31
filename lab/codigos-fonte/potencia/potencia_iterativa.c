@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <math.h>
 
+// Nosso Código
 int main() {
     int n, k, potencia = 1;
     scanf("%d %d", &n, &k);
