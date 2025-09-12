@@ -43,9 +43,9 @@ int main() {
         
         //conta o comprimento do nome
         int len_nome = 0;
-	      for(int i = 0; nome[i] != '\0'; i++) {
-				     len_nome++;
-	      }
+	        for(int i = 0; nome[i] != '\0'; i++) {
+			    len_nome++;
+	        }
 
 		//se identificar que o aluno é da usp, insere na primeira posição livre do array
 		//usp[] e incrementa qtd de corredores da usp. Caso contrário, faz o contrário.
