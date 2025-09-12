@@ -1,6 +1,12 @@
+// Gustavo Vieira Gomes - N° USP: 16907251
+// André Campanholo Paschoalini - N° USP: 14558061
+
 #include "stdio.h"
 
+// Nosso Código
 int potencia(int n, int k) {
+    if (k == 0) return 1;
+
     if (k == 1) return n % 1000;
 
     if (k%2 == 0) {
