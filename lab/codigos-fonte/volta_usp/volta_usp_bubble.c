@@ -6,7 +6,7 @@
 #include <string.h>
 
 //função para imprimir usp formatado
-void imprimir_usp(int usp[], int len_usp, int n_comp_usp, int n_trocas_usp) {
+void imprimir_usp(char usp[], int len_usp, int n_comp_usp, int n_trocas_usp) {
     printf("USP - [");
     for(int i = 0; i < len_usp; i++) {
         printf("%d", usp[i]);
@@ -17,7 +17,7 @@ void imprimir_usp(int usp[], int len_usp, int n_comp_usp, int n_trocas_usp) {
 }
 
 //função para imprimir externos formatado
-void imprimir_externos(int ext[], int len_ext, int n_comp_ext, int n_trocas_ext) {
+void imprimir_externos(char ext[], int len_ext, int n_comp_ext, int n_trocas_ext) {
     printf("Externa - [");
     for(int i = 0; i < len_ext; i++) {
         printf("%d", ext[i]);
@@ -28,81 +28,67 @@ void imprimir_externos(int ext[], int len_ext, int n_comp_ext, int n_trocas_ext)
 }
 
 //função auxiliar que troca dois valores
-void swap(int *a, int *b) {
-    int temp = *a;
+void swap(char *a, char *b) {
+    char temp = *a;
     *a = *b;
     *b = temp;
 }
 
-//função bubble sort com flag que encerra ordenação caso, em alguma iteração antes do fim, não haja nenhuma troca feita
-//indicando que o vetor já está ordenado.
-void *bubble_sort(int v[], int n, int *comps, int *trocas) {
+//função bubble sort que ordena o vetor
+void *bubble_sort(char v[], int n, int *comps, int *trocas) {
     *comps = 0;
     *trocas = 0;
 
-    //flag que delata se alguma troca foi feita ou não
-    int trocou;
     for(int i = 0; i < n - 1; i++) {
-        trocou = 0;
         for(int j = 0; j < n - i - 1; j++) {
             (*comps)++;
             if(v[j] > v[j + 1]) {
                 swap(&v[j], &v[j + 1]);
                 (*trocas)++;
-                //caso alguma troca seja feita flag 'trocou' delata
-                trocou = 1;
             }
-        }
-        //se nenhuma troca foi feita o vetor já está ordenado e 'trocou' = 0, logo, podemos encerrar o bubble sort
-        if(!trocou) {
-            break;
         }
     }
 }
 
 int main() {
-    // Aloca memória para os um vetor de inteiros que corresponderão ao número de caracteres de cada nome em cada lista
-    int *usp = (int *)calloc(100, sizeof(int));
+    //aloca memória para os um vetor de inteiros que corresponderão ao número de caracteres de cada nome em cada lista
+    char *usp = (char *)calloc(100, sizeof(char));
     //variável que armazena capacidade máxima do vetor usp...
     //será aumentado caso hajam mais linhas de entrada por meio de realloc
     int usp_tam_max = 100;
 
     //idem acima
-    int *externo = (int *)calloc(100, sizeof(int));
+    char *externo = (char *)calloc(100, sizeof(char));
     int ext_tam_max = 100;
 
     //inicializa contadores para a quantidade de corredores da USP e externos
     int cont_usp = 0, cont_ext = 0;
 
     //cria uma string para receber os nomes dos participantes da corrida
-    char participante[500];
+    char participante[150];
 
     //leitura das strings até EOF
-    while(fgets(participante, 499, stdin) != NULL) {
-        //scaneia uma substring nome a partir da string original
-        char nome[489];
-        sscanf(participante, "%488[^-]", nome);
-        
+    while(fgets(participante, 149, stdin) != NULL) {      
         //conta o comprimento do nome, ignorando espaços
         int len_nome = 0;
-        for(int j = 0; nome[j] != '\0'; j++) {
-            if(nome[j] != ' ' && nome[j] != '\n') //ignora espaços e quebras de linha
+        for(int j = 0; participante[j] != '-'; j++) {
+            if(participante[j] != ' ' && participante[j] != '\n') //ignora espaços e quebras de linha
                 len_nome++;
         }
 
         //se identificar que o aluno é da USP, insere na primeira posição livre do array
         //usp[] e incrementa qtd de corredores da USP. Caso contrário, faz o mesmo para externo.
-        if(strstr(participante, "usp")) {
+        if(strstr(participante, "- usp")) {
             if(cont_usp == usp_tam_max) {
                 usp_tam_max *= 2; //dobra a capacidade do vetor usp para receber novas linhas de entrada
-                usp = realloc(usp, usp_tam_max * sizeof(int)); //realloc o dobro de memória para o vetor
+                usp = realloc(usp, usp_tam_max * sizeof(char)); //realloc o dobro de memória para o vetor
             }
             usp[cont_usp] = len_nome;
             cont_usp++;
-        } else if(strstr(participante, "externa")) {
+        } else if(strstr(participante, "- externa")) {
             if(cont_ext == ext_tam_max) {
                 ext_tam_max *= 2; //idem acima
-                externo = realloc(externo, ext_tam_max * sizeof(int)); //idem acima
+                externo = realloc(externo, ext_tam_max * sizeof(char)); //idem acima
             }
             externo[cont_ext] = len_nome;
             cont_ext++;
