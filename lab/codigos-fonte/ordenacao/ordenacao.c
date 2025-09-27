@@ -14,6 +14,27 @@ void swap_indice(int *a, int *b) {
     *b = temp;
 }
 
+// int compara(BRINQUEDO **brinquedo, int n, int indices[], int i, int j) {
+//     if(strcmp(brinquedo[indices[i]]->cor, brinquedo[indices[j]]->cor) > 0) {
+
+//         swap_indice(&indices[i], &indices[j]);
+
+//     } else if(strcmp(brinquedo[indices[i]]->cor, brinquedo[indices[j]]->cor) == 0) {
+
+//         if(brinquedo[indices[i]]->comprimento > brinquedo[indices[j]]->comprimento) {
+
+//             swap_indice(&indices[i], &indices[j]);
+
+//         } else if(brinquedo[indices[i]]->comprimento == brinquedo[indices[j]]->comprimento) {
+
+//             if(brinquedo[indices[i]]->gosto < brinquedo[indices[j]]->gosto) {
+
+//                 swap_indice(&indices[i], &indices[j]);
+//             }
+//         }
+//     }
+// }
+
 void bubble_sort(BRINQUEDO **brinquedo, int n, int indices[]) {
     for(int i = 0; i < n - 1; i++) {
         for(int j = 0; j < n - i - 1; j++) {
@@ -46,7 +67,7 @@ void insertion_sort(BRINQUEDO **brinquedo, int n, int indices[]) {
         j = i - 1;
 
         while(j >= 0) {
-            
+
 
             j--;
         }
