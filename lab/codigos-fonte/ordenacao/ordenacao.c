@@ -71,7 +71,7 @@ void bubble_sort(BRINQUEDO **brinquedo, int n, int indices[]) {
 void insertion_sort(BRINQUEDO **brinquedos, int n, int indices[]) {
     int i, j, elem;
 
-    for(i = 1; i < n - 1; i++) {
+    for(i = 1; i < n; i++) {
         elem = indices[i];    
 
         j = i - 1;
@@ -89,8 +89,50 @@ void insertion_sort(BRINQUEDO **brinquedos, int n, int indices[]) {
     }
 }
 
-void merge_sort(BRINQUEDO **brinquedo) {
+void merge(BRINQUEDO **brinquedos, int indices[], int ini, int meio, int fim) {
+    int i, j, k, n1, n2;
 
+    n1 = meio - ini + 1;
+    n2 = fim - meio;
+
+    int indices_L[n1], indices_R[n2];
+
+    for(i = 0; i < n1; i++)
+        indices_L[i] = indices[ini + i];
+    for(j = 0; j < n2; j++)
+        indices_R[j] = indices[meio + 1 + j];
+    
+    i = j = 0;
+    for(k = ini; k <= fim; k++) {
+        if(i >= n1) {
+            indices[k] = indices_R[j];
+            j++;
+        } else if(j >= n2) {
+            indices[k] = indices_L[i];
+            i++;
+        } else {
+            int indices_aux[2];
+            indices_aux[0] = indices_L[i];
+            indices_aux[1] = indices_R[j];
+
+            if(!a_maior_que_b(brinquedos, indices_aux, 0, 1)) {
+                indices[k] = indices_L[i];
+                i++;
+            } else {
+                indices[k] = indices_R[j];
+                j++;
+            }
+        }
+    }
+}
+
+void merge_sort(BRINQUEDO **brinquedos, int indices[], int ini, int fim) {
+    int meio = (ini + fim) / 2;
+    if(ini < fim) {
+        merge_sort(brinquedos, indices, ini, meio);
+        merge_sort(brinquedos, indices, meio + 1, fim);
+        merge(brinquedos, indices, ini, meio, fim);
+    }
 }
 
 void quick_sort(BRINQUEDO **brinquedos, int indices[], int ini, int fim) {
@@ -143,10 +185,10 @@ int main() {
             bubble_sort(brinquedos, numero_brinquedos, indices);
             break;
         case 2:
-            insertion_sort(brinquedos, numero_brinquedos + 1, indices);
+            insertion_sort(brinquedos, numero_brinquedos, indices);
             break;
         case 3:
-            merge_sort(brinquedos);
+            merge_sort(brinquedos, indices, 0, numero_brinquedos - 1);
             break;
         case 4:
             quick_sort(brinquedos, indices, 0, numero_brinquedos - 1);
