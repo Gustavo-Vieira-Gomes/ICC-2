@@ -7,7 +7,6 @@
 //André Campanholo Paschoalini - NºUSP: 14558061
 //Gustavo Vieira Gomes - NºUSP: 16907251
 
-
 //Função que troca valores inteiros
 void swap(int *a, int *b) {
     int temp = *a;
